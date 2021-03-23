@@ -5,29 +5,18 @@ namespace SensorValidate
 {
     public class SensorValidator
     {
-        public static bool _give_me_a_good_name(double value, double nextValue, double maxDelta) {
-            if(nextValue - value > maxDelta) {
-                return false;
-            }
-            return true;
-        }
-        public static bool validateSOCreadings(List<Double> values) {
-            int lastButOneIndex = values.Count - 1;
-            for(int i = 0; i < lastButOneIndex; i++) {
-                if(!_give_me_a_good_name(values[i], values[i + 1], 0.05)) {
+        private static bool IsValueSuddenJumped(double value, double maxDelta) => !(value > maxDelta);
+        public static bool ValidateSOCReadings(List<Double> values) => IsAnyValueSuddenJumped(values ?? throw new ArgumentNullException("values cannot be null."), 0.05);
+        public static bool ValidateCurrentReadings(List<Double> values) => IsAnyValueSuddenJumped(values ?? throw new ArgumentNullException("values cannot be null."), 0.1);
+        private static bool IsAnyValueSuddenJumped(List<Double> values, double maxDelta)
+        {
+            for (int i = 0; i < (values.Count - 1); i++)
+            {
+                if (!IsValueSuddenJumped(values[i + 1] - values[i], maxDelta))
                     return false;
-                }
             }
             return true;
         }
-        public static bool validateCurrentreadings(List<Double> values) {
-            int lastButOneIndex = values.Count - 1;
-            for(int i = 0; i < lastButOneIndex; i++) {
-                if(!_give_me_a_good_name(values[i], values[i + 1], 0.1)) {
-                    return false;
-                }
-            }
-            return true;
-        }
+
     }
 }
