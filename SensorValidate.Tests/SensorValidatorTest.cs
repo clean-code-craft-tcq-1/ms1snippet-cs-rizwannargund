@@ -8,13 +8,13 @@ namespace SensorValidate.Tests
     public class SensorValidatorTest
     {
         [Fact]
-        public void reportsErrorWhenSOCjumps() {
+        public void ReportsErrorWhenSOCJumps() {
             Assert.False(SensorValidator.ValidateSOCReadings(
                 new List<double>{0.0, 0.01, 0.5, 0.51}
             ));
         }
         [Fact]
-        public void reportsErrorWhenCurrentjumps() {
+        public void ReportsErrorWhenCurrentJumps() {
             Assert.False(SensorValidator.ValidateCurrentReadings(
                 new List<double>{0.03, 0.03, 0.03, 0.33}
             ));
@@ -27,7 +27,7 @@ namespace SensorValidate.Tests
             ));
         }
         [Fact]
-        public void ErrorWhenCurrentReadingsHasNoValues()
+        public void WhenCurrentReadingsHasNoValues()
         {
             Assert.Throws<ArgumentNullException>(() => SensorValidator.ValidateCurrentReadings(
                 null
